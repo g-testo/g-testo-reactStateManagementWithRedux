@@ -1,51 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
+
+import { useSelector, useDispatch } from "react-redux";
 
 import About from "./pages/About";
 import Tasks from "./pages/Tasks";
 import Settings from "./pages/Settings";
 
-import { initialTasks, initialUsers, initialCurrentUserIndex } from "./assets/data/initialData";
+import { fetchCurrentUserIndex, fetchUsers } from "./reducers/userSlice";
+import { fetchTasks } from "./reducers/taskSlice";
 
 const App = () => {
-    const [currentUserIndex, setCurrentUserIndex] = useState(0);
-    const [users, setUsers] = useState([]);
-
-    const [tasks, setTasks] = useState(initialTasks);
-    
-    const [privacyMode, setPrivacyMode] = useState(false);
-    const [theme, setTheme] = useState("light");
-
-    // Fake fetch methods to simulate fetching data from an API
-    const fetchCurrentUserIndex = () => {
-        return initialCurrentUserIndex;
-    };
-
-    const fetchTasks = () => {
-        return initialTasks;
-    };
-
-    const fetchUsers = () => {
-        return initialUsers;
-    };
-    // End fake fetch methods
+    const dispatch = useDispatch();
+    const { user, task, ui } = useSelector((state) => state);
+    const { users, currentUserIndex } = user;
+    const { privacyMode, theme } = ui;
+    const { tasks } = task;
 
     useEffect(() => {
-        const fetchedCurrentUser = fetchCurrentUserIndex();
-        const fetchedTasks = fetchTasks();
-        const fetchedUsers = fetchUsers();
-
-        setCurrentUserIndex(fetchedCurrentUser);
-        setTasks(fetchedTasks);
-        setUsers(fetchedUsers);
+        dispatch(fetchCurrentUserIndex());
+        dispatch(fetchUsers());
+        dispatch(fetchTasks());
     }, []);
 
     return (
-        <div style={{
-            backgroundColor: theme === "light" ? "white" : "darkgrey",
-            color: theme === "light" ? "black" : "white",
-        }}>
+        <div
+            style={{
+                backgroundColor: theme === "light" ? "white" : "darkgrey",
+                color: theme === "light" ? "black" : "white",
+            }}
+        >
             <h1>State Management</h1>
 
             <Routes>

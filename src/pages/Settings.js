@@ -1,5 +1,8 @@
 const Settings = ({ users, theme, currentUserIndex, setCurrentUserIndex, privacyMode, setPrivacyMode, setTheme }) => {
-    console.log(users);
+    const { user, task, ui } = useSelector((state) => state);
+    const { users, currentUserIndex } = user;
+    const { privacyMode, theme } = ui;
+    const { tasks } = task;    
     
     return (
         <>

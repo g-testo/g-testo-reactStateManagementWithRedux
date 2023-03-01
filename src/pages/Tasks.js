@@ -1,6 +1,12 @@
 import Task from "./Task";
+import { useSelector } from "react-redux";
 
-const Tasks = ({ tasks, currentUserIndex, privacyMode, users }) => {
+const Tasks = () => {
+    const { user, task, ui } = useSelector((state) => state);
+    const { users, currentUserIndex } = user;
+    const { privacyMode } = ui;
+    const { tasks } = task;
+
     return (
         <>
             <h2>Tasks</h2>
