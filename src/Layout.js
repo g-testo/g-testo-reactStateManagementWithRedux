@@ -1,13 +1,23 @@
 import { Outlet, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import privateProfilePlaceholder from "./assets/images/private_profile_placeholder.png";
 import publicProfilePlaceholder from "./assets/images/public_profile_placeholder.png";
 
-function Layout({ currentUser, privacyMode }) {
+function Layout() {
+    const { users, currentUserIndex } = useSelector((state) => state.user);
+    const { privacyMode } = useSelector((state) => state.ui);
+
+    const currentUser = users[currentUserIndex];
+
     return (
         <div>
             <header>
-                <img width="100" src={privacyMode ? privateProfilePlaceholder : publicProfilePlaceholder} alt="Profile" />
+                <img
+                    width="100"
+                    src={privacyMode ? privateProfilePlaceholder : publicProfilePlaceholder}
+                    alt="Profile"
+                />
                 <h1>{currentUser}</h1>
             </header>
             <nav>

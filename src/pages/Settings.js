@@ -1,9 +1,13 @@
-const Settings = ({ users, theme, currentUserIndex, setCurrentUserIndex, privacyMode, setPrivacyMode, setTheme }) => {
-    const { user, task, ui } = useSelector((state) => state);
-    const { users, currentUserIndex } = user;
-    const { privacyMode, theme } = ui;
-    const { tasks } = task;    
-    
+
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme, togglePrivacyMode } from "../reducers/uiSlice";
+import { updateCurrentUserIndex } from "../reducers/userSlice";
+
+const Settings = () => {
+    const dispatch = useDispatch();
+    const { users, currentUserIndex } = useSelector((state) => state.user);
+    const { theme, privacyMode } = useSelector((state) => state.ui);
+
     return (
         <>
             <h2>Settings</h2>
@@ -13,7 +17,7 @@ const Settings = ({ users, theme, currentUserIndex, setCurrentUserIndex, privacy
                     id="user"
                     value={currentUserIndex}
                     onChange={(event) => {
-                        setCurrentUserIndex(parseInt(event.target.value));
+                        dispatch(updateCurrentUserIndex(parseInt(event.target.value)));
                     }}
                 >
                     {users.map((userName, index) => {
@@ -30,8 +34,8 @@ const Settings = ({ users, theme, currentUserIndex, setCurrentUserIndex, privacy
                 <select
                     id="theme"
                     value={theme}
-                    onChange={(event) => {
-                        setTheme(event.target.value);
+                    onChange={() => {
+                        dispatch(toggleTheme());
                     }}
                 >
                     <option value="light">Light</option>
@@ -44,8 +48,8 @@ const Settings = ({ users, theme, currentUserIndex, setCurrentUserIndex, privacy
                     id="privacyModeMode"
                     type="checkbox"
                     checked={privacyMode}
-                    onChange={(event) => {
-                        setPrivacyMode(event.target.checked);
+                    onChange={() => {
+                        dispatch(togglePrivacyMode());
                     }}
                 />
             </div>

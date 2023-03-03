@@ -12,12 +12,7 @@ export const taskSlice = createSlice({
         fetchTasks: (state, action) => {
             state.tasks = initialTasks;
         },
-    },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(actionFromAnotherSlice, (state, action) => {})
-    //         .addDefaultCase((state, action) => {});
-    // },
+    }
 });
 
 export const { fetchTasks } = taskSlice.actions;

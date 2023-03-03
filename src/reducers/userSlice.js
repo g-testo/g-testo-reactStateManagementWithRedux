@@ -10,20 +10,16 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        fetchUsers: (state, action) => {
+        fetchInitialUserData: (state, action) => {
             state.users = initialUsers;
-        },
-        fetchCurrentUserIndex: (state, action) => {
             state.currentUserIndex = initialCurrentUserIndex;
         },
-    },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(actionFromAnotherSlice, (state, action) => {})
-    //         .addDefaultCase((state, action) => {});
-    // },
+        updateCurrentUserIndex: (state, action) => {
+            state.currentUserIndex = action.payload;
+        },
+    }
 });
 
-export const { fetchUsers } = userSlice.actions;
+export const { fetchInitialUserData, updateCurrentUserIndex } = userSlice.actions;
 
 export default userSlice.reducer;

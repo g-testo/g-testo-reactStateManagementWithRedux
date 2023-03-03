@@ -8,19 +8,15 @@ import About from "./pages/About";
 import Tasks from "./pages/Tasks";
 import Settings from "./pages/Settings";
 
-import { fetchCurrentUserIndex, fetchUsers } from "./reducers/userSlice";
+import { fetchInitialUserData } from "./reducers/userSlice";
 import { fetchTasks } from "./reducers/taskSlice";
 
 const App = () => {
     const dispatch = useDispatch();
-    const { user, task, ui } = useSelector((state) => state);
-    const { users, currentUserIndex } = user;
-    const { privacyMode, theme } = ui;
-    const { tasks } = task;
+    const { theme } = useSelector((state) => state.ui);
 
     useEffect(() => {
-        dispatch(fetchCurrentUserIndex());
-        dispatch(fetchUsers());
+        dispatch(fetchInitialUserData());
         dispatch(fetchTasks());
     }, []);
 
@@ -34,33 +30,10 @@ const App = () => {
             <h1>State Management</h1>
 
             <Routes>
-                <Route path="/" element={<Layout currentUser={users[currentUserIndex]} privacyMode={privacyMode} />}>
-                    <Route
-                        index
-                        element={
-                            <Tasks
-                                tasks={tasks}
-                                currentUserIndex={currentUserIndex}
-                                privacyMode={privacyMode}
-                                users={users}
-                            />
-                        }
-                    />
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Tasks />} />
                     <Route path="about" element={<About />} />
-                    <Route
-                        path="settings"
-                        element={
-                            <Settings
-                                users={users}
-                                theme={theme}
-                                currentUserIndex={currentUserIndex}
-                                setCurrentUserIndex={setCurrentUserIndex}
-                                privacyMode={privacyMode}
-                                setPrivacyMode={setPrivacyMode}
-                                setTheme={setTheme}
-                            />
-                        }
-                    />
+                    <Route path="settings" element={<Settings />} />
                 </Route>
             </Routes>
         </div>

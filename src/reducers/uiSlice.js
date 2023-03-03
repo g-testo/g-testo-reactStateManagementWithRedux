@@ -9,20 +9,15 @@ export const uiSlice = createSlice({
     name: "ui",
     initialState,
     reducers: {
-        updatePrivacyMode: (state, action) => {
-            state.privacyMode = action.payload;
+        togglePrivacyMode: (state) => {
+            state.privacyMode = !state.privacyMode;
         },
-        updateTheme: (state, action) => {
-            state.theme = action.payload;
+        toggleTheme: (state) => {
+            state.theme = state.theme === "light" ? "dark" : "light";
         }
-    },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(actionFromAnotherSlice, (state, action) => {})
-    //         .addDefaultCase((state, action) => {});
-    // },
+    }
 });
 
-export const { fetchTasks } = uiSlice.actions;
+export const { togglePrivacyMode, toggleTheme } = uiSlice.actions;
 
 export default uiSlice.reducer;
